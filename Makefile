@@ -8,7 +8,6 @@ build: deps
 	docker build -t $(IMAGE) .
 
 clean:
-	docker rm $$(docker ps -a -q) -f
 	docker rmi $(IMAGE)
 
 deps: composer-install
@@ -27,4 +26,4 @@ composer composer-install composer-update composer-require composer-require-modu
 			--no-ansi
 
 test: composer-install
-	docker run --rm -v $(PWD):/app -w /app $(IMAGE) vendor/bin/phpunit
+	docker run --rm -v $(PWD):/app -w /app $(IMAGE) vendor/bin/phpunit $(FILTER_TEST_OPTIONS);
