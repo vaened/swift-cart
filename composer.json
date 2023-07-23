@@ -1,23 +1,31 @@
 {
-    "name": "vaened/swift-cart",
-    "description": "The SwiftCart library is a powerful tool for managing shopping carts, invoicing, and product administration.",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Vaened\\SwiftCart\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Enea Dhack",
-            "email": "enea.so@live.com"
-        }
-    ],
-    "require": {
-        "php": "^8.1",
-        "lambdish/phunctional": "^2.1"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^10.2"
+  "name": "vaened/swift-cart",
+  "description": "The SwiftCart library is a powerful tool for managing shopping carts, invoicing, and product administration.",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Vaened\\SwiftCart\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Vaened\\SwiftCart\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Enea Dhack",
+      "email": "enea.so@live.com"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "lambdish/phunctional": "^2.1",
+    "brick/money": "^0.8.0",
+    "vaened/support": "^1.0.0",
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.2",
+    "symfony/var-dumper": "^6.3"
+  }
 }
