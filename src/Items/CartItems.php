@@ -21,7 +21,7 @@ use function sprintf;
 
 abstract class CartItems extends ImmutableCollection
 {
-    public function __construct(array $items)
+    public function __construct(array $items = [])
     {
         parent::__construct([]);
         $this->reindex($items);
