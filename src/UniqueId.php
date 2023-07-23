@@ -10,6 +10,7 @@ namespace Vaened\SwiftCart;
 use Vaened\SwiftCart\Entities\Identifiable;
 
 use function rand;
+use function uniqid;
 
 final class UniqueId implements Identifiable
 {
@@ -21,7 +22,7 @@ final class UniqueId implements Identifiable
 
     public static function random(): self
     {
-        return new self((string)rand());
+        return new self(uniqid((string)rand()));
     }
 
     public function uniqueId(): string
