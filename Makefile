@@ -26,4 +26,4 @@ composer composer-install composer-update composer-require composer-require-modu
 			--no-ansi
 
 test: composer-install
-	docker run --rm -v $(PWD):/app -w /app $(IMAGE) vendor/bin/phpunit $(FILTER_TEST_OPTIONS);
+	docker run --rm -v $(PWD):/app -w /app $(IMAGE) vendor/bin/phpunit $(FILTER_TEST_OPTIONS) --testdox;
