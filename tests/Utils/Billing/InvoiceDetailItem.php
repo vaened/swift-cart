@@ -27,7 +27,7 @@ final class InvoiceDetailItem implements Traded
 
     public static function from(Product $product): self
     {
-        return new self($product, $product->amount(), 1, Adjusters::from([]), Adjusters::from([]));
+        return new self($product, $product->amount(), 1, Adjusters::empty(), Adjusters::empty());
     }
 
     public static function create(
@@ -38,7 +38,7 @@ final class InvoiceDetailItem implements Traded
         Adjusters $discounts = null,
     ): self
     {
-        return new self($product, $amount, $quantity, $charges ?? Adjusters::from([]), $discounts ?? Adjusters::from([]));
+        return new self($product, $amount, $quantity, $charges ?? Adjusters::empty(), $discounts ?? Adjusters::empty());
     }
 
     public function uniqueId(): string
@@ -49,11 +49,6 @@ final class InvoiceDetailItem implements Traded
     public function amount(): Amount
     {
         return $this->amount;
-    }
-
-    public function description(): string
-    {
-        return $this->product->description();
     }
 
     public function quantity(): int

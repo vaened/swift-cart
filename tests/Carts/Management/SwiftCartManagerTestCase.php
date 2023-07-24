@@ -61,10 +61,11 @@ abstract class SwiftCartManagerTestCase extends SwiftCartTestCase
 
     protected function assertCartItemIs(Product $product, ?CartItem $item): void
     {
+        $tradable = $item?->tradable();
         $this->assertEquals(
-            null === $item ? null : new Product(
-                $item->uniqueId(),
-                $item->amount(),
+            null === $tradable ? null : new Product(
+                $tradable->uniqueId(),
+                $tradable->amount(),
             ),
             $product
         );

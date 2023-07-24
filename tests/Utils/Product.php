@@ -7,11 +7,14 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests\Utils;
 
+use Vaened\PriceEngine\Adjusters\Adjusters;
 use Vaened\PriceEngine\Money\Amount;
+use Vaened\SwiftCart\Entities\Chargeable;
+use Vaened\SwiftCart\Entities\Discountable;
 use Vaened\SwiftCart\Entities\Tradable;
 use Vaened\SwiftCart\UniqueId;
 
-final class Product implements Tradable
+final class Product implements Tradable, Discountable, Chargeable
 {
     public function __construct(
         private readonly string $id,
@@ -38,5 +41,15 @@ final class Product implements Tradable
     public function amount(): Amount
     {
         return $this->amount;
+    }
+
+    public function charges(): Adjusters
+    {
+        return Adjusters::empty();
+    }
+
+    public function discounts(): Adjusters
+    {
+        return Adjusters::empty();
     }
 }
