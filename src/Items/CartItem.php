@@ -13,6 +13,8 @@ use Vaened\PriceEngine\Calculators\StandardCashier;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Money\Amount;
 use Vaened\PriceEngine\TotalSummary;
+use Vaened\SwiftCart\Entities\Chargeable;
+use Vaened\SwiftCart\Entities\Discountable;
 use Vaened\SwiftCart\Entities\Identifiable;
 use Vaened\SwiftCart\Entities\Tradable;
 
@@ -24,11 +26,15 @@ abstract class CartItem implements Identifiable
         protected readonly Tradable $tradable,
         int                         $quantity,
         Taxes                       $taxes = new Taxes([]),
-        Adjusters                   $charges = new Adjusters([]),
-        Adjusters                   $discounts = new Adjusters([]),
     )
     {
-        $this->cashier = $this->createCashier($tradable->amount(), $quantity, $taxes, $charges, $discounts);
+        $this->cashier = $this->createCashier(
+            $tradable->amount(),
+            $quantity,
+            $taxes,
+            $tradable instanceof Chargeable ? $tradable->charges() : Adjusters::empty(),
+            $tradable instanceof Discountable ? $tradable->discounts() : Adjusters::empty()
+        );
     }
 
     public function uniqueId(): string

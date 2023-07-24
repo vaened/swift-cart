@@ -14,7 +14,7 @@ final class ImmutableCartItem extends CartItem
 {
     public function __construct(Traded $quoted)
     {
-        parent::__construct($quoted, $quoted->quantity(), Taxes::empty(), $quoted->charges(), $quoted->discounts());
+        parent::__construct($quoted, $quoted->quantity(), Taxes::empty());
     }
 
     public function toCommerceable(): CommerceableCartItem
