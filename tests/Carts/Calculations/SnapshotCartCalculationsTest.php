@@ -7,19 +7,12 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests\Carts\Calculations;
 
-use Vaened\PriceEngine\Adjusters\Adjusters;
-use Vaened\PriceEngine\Adjusters\Tax;
-use Vaened\PriceEngine\Adjusters\Tax\TaxCodes;
+use Vaened\PriceEngine\Adjustments\{Adjusters, Charge, Discount, Tax, Tax\TaxCodes};
 use Vaened\PriceEngine\Money\Amount;
-use Vaened\PriceEngine\Money\Charge;
-use Vaened\PriceEngine\Money\Discount;
 use Vaened\SwiftCart\Carts\SnapshotCart;
+use Vaened\SwiftCart\Tests\Utils\{MoneyFactory, Products, Summary, TaxCode};
 use Vaened\SwiftCart\Tests\Utils\Billier;
 use Vaened\SwiftCart\Tests\Utils\Billing\InvoiceDetailItem;
-use Vaened\SwiftCart\Tests\Utils\MoneyFactory;
-use Vaened\SwiftCart\Tests\Utils\Products;
-use Vaened\SwiftCart\Tests\Utils\Summary;
-use Vaened\SwiftCart\Tests\Utils\TaxCode;
 
 final class SnapshotCartCalculationsTest extends SwiftCartCalculationsTestCase
 {

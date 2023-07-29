@@ -7,10 +7,11 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Items;
 
-use Vaened\PriceEngine\Adjusters\Adjusters;
-use Vaened\PriceEngine\Adjusters\Tax\Taxes;
-use Vaened\PriceEngine\Calculators\StandardCashier;
+
+use Vaened\PriceEngine\Adjustments\Adjusters;
+use Vaened\PriceEngine\Adjustments\Tax\Taxes;
 use Vaened\PriceEngine\Cashier;
+use Vaened\PriceEngine\Cashiers\RegularCashier;
 use Vaened\PriceEngine\Money\Amount;
 use Vaened\PriceEngine\TotalSummary;
 use Vaened\SwiftCart\Entities\Chargeable;
@@ -70,6 +71,6 @@ abstract class CartItem implements Identifiable
         Adjusters $discounts
     ): Cashier
     {
-        return new StandardCashier($amount, $quantity, $taxes, $charges, $discounts);
+        return new RegularCashier($amount, $quantity, $taxes, $charges, $discounts);
     }
 }

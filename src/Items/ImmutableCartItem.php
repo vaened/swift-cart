@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Items;
 
-use Vaened\PriceEngine\Adjusters\Tax\Taxes;
+use Vaened\PriceEngine\Adjustments\Tax\Taxes;
 use Vaened\SwiftCart\Entities\Traded;
 
 final class ImmutableCartItem extends CartItem

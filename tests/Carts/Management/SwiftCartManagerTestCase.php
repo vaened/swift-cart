@@ -7,8 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests\Carts\Management;
 
-use Vaened\PriceEngine\Money\Charge;
-use Vaened\PriceEngine\Money\Discount;
+use Vaened\PriceEngine\Adjustments\{Charge, Discount};
 use Vaened\SwiftCart\Entities\Identifiable;
 use Vaened\SwiftCart\Items\CartItem;
 use Vaened\SwiftCart\Tests\Carts\SwiftCartTestCase;

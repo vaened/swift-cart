@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Entities;
 
-use Vaened\PriceEngine\Adjusters\Adjusters;
+use Vaened\PriceEngine\Adjustments\Adjusters;
 
 interface Chargeable
 {

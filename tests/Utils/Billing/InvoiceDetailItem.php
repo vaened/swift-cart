@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests\Utils\Billing;
 
-use Vaened\PriceEngine\Adjusters\Adjusters;
+use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Money\Amount;
 use Vaened\SwiftCart\Entities\Traded;
 use Vaened\SwiftCart\Tests\Utils\Product;

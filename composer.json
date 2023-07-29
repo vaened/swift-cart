@@ -23,7 +23,7 @@
     "lambdish/phunctional": "^2.1",
     "brick/money": "^0.8.0",
     "vaened/support": "^1.0.0",
-    "vaened/php-price-engine": "^0.2.1"
+    "vaened/php-price-engine": "^0.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^10.2",
