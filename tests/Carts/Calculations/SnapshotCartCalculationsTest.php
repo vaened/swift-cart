@@ -50,10 +50,10 @@ final class SnapshotCartCalculationsTest extends SwiftCartCalculationsTestCase
         $this->assertTotals(
             new Summary(
                 subtotal      : MoneyFactory::of(1574.2373),
-                totalTaxes    : MoneyFactory::of(145.7627),
+                totalTaxes    : MoneyFactory::of(165.7627),
                 totalCharges  : MoneyFactory::of(10),
                 totalDiscounts: MoneyFactory::of(37.7119),
-                total         : MoneyFactory::of(1692.2881),
+                total         : MoneyFactory::of(1712.2881),
             )
         );
     }
