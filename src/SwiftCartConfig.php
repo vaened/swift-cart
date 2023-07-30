@@ -11,14 +11,17 @@ use Brick\Math\RoundingMode;
 use Brick\Money\Context;
 use Brick\Money\Context\DefaultContext;
 use Brick\Money\Currency;
+use Vaened\SwiftCart\Providers\SimpleCashierProvider;
 
 final class SwiftCartConfig
 {
-    private static Currency $currency;
+    private static Currency        $currency;
 
-    private static Context  $context;
+    private static Context         $context;
 
-    private static int $roundingMode = RoundingMode::HALF_UP;
+    private static CashierProvider $provider;
+
+    private static int             $roundingMode = RoundingMode::HALF_UP;
 
     public static function defaultCurrency(): Currency
     {
@@ -48,5 +51,15 @@ final class SwiftCartConfig
     public static function setDefaultRoundingMode(int $roundingMode): void
     {
         self::$roundingMode = $roundingMode;
+    }
+
+    public static function provider(): CashierProvider
+    {
+        return self::$provider ??= new SimpleCashierProvider();
+    }
+
+    public static function setCashierProvider(CashierProvider $provider): void
+    {
+        self::$provider = $provider;
     }
 }

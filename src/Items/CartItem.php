@@ -7,17 +7,16 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Items;
 
-
 use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Adjustments\Tax\Taxes;
 use Vaened\PriceEngine\Cashier;
-use Vaened\PriceEngine\Cashiers\RegularCashier;
 use Vaened\PriceEngine\Money\Amount;
 use Vaened\PriceEngine\TotalSummary;
 use Vaened\SwiftCart\Entities\Chargeable;
 use Vaened\SwiftCart\Entities\Discountable;
 use Vaened\SwiftCart\Entities\Identifiable;
 use Vaened\SwiftCart\Entities\Tradable;
+use Vaened\SwiftCart\SwiftCartConfig;
 
 abstract class CartItem implements Identifiable
 {
@@ -71,6 +70,6 @@ abstract class CartItem implements Identifiable
         Adjusters $discounts
     ): Cashier
     {
-        return new RegularCashier($amount, $quantity, $taxes, $charges, $discounts);
+        return SwiftCartConfig::provider()->createCashier($amount, $quantity, $taxes, $charges, $discounts);
     }
 }
