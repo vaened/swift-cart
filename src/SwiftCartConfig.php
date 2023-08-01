@@ -7,10 +7,10 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart;
 
-use Brick\Math\RoundingMode;
 use Brick\Money\Context;
 use Brick\Money\Context\DefaultContext;
 use Brick\Money\Currency;
+use Vaened\PriceEngine\PriceEngineConfig;
 use Vaened\SwiftCart\Providers\SimpleCashierProvider;
 
 final class SwiftCartConfig
@@ -20,8 +20,6 @@ final class SwiftCartConfig
     private static Context         $context;
 
     private static CashierProvider $provider;
-
-    private static int             $roundingMode = RoundingMode::HALF_UP;
 
     public static function defaultCurrency(): Currency
     {
@@ -45,12 +43,12 @@ final class SwiftCartConfig
 
     public static function defaultRoundingMode(): int
     {
-        return self::$roundingMode;
+        return PriceEngineConfig::defaultRoundingMode();
     }
 
     public static function setDefaultRoundingMode(int $roundingMode): void
     {
-        self::$roundingMode = $roundingMode;
+        PriceEngineConfig::setDefaultRoundingMode($roundingMode);
     }
 
     public static function provider(): CashierProvider
