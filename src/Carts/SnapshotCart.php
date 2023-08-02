@@ -12,6 +12,7 @@ use Vaened\SwiftCart\Entities\TradedCommercialTransaction;
 use Vaened\SwiftCart\Items\ImmutableCartItem;
 use Vaened\SwiftCart\Items\ImmutableCartItems;
 use Vaened\SwiftCart\NotFoundItem;
+use Vaened\SwiftCart\Summary;
 
 final class SnapshotCart extends SwiftCart
 {
@@ -44,6 +45,11 @@ final class SnapshotCart extends SwiftCart
     {
         $immutables = $this->immutables->except($this->staging());
         $this->staging()->combine($immutables);
+    }
+
+    public function summary(): Summary
+    {
+        return $this->totalizer()->summary();
     }
 
     protected function staging(): ImmutableCartItems

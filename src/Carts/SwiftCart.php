@@ -12,15 +12,13 @@ use Vaened\SwiftCart\Entities\Identifiable;
 use Vaened\SwiftCart\Items\CartItem;
 use Vaened\SwiftCart\Items\CartItems;
 use Vaened\SwiftCart\Summary;
+use Vaened\SwiftCart\Totalizer;
 
 abstract class SwiftCart
 {
-    abstract protected function staging(): CartItems;
+    abstract public function summary(): Summary;
 
-    public function summary(): Summary
-    {
-        return $this->staging()->summary();
-    }
+    abstract protected function staging(): CartItems;
 
     public function locate(Identifiable $identifiable): ?CartItem
     {
@@ -42,5 +40,10 @@ abstract class SwiftCart
         return new ArrayList(
             $this->staging()->items()
         );
+    }
+
+    protected function totalizer(): Totalizer
+    {
+        return $this->staging()->totalizer();
     }
 }

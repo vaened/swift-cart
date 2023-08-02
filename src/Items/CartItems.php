@@ -11,8 +11,7 @@ use Vaened\Support\Types\ImmutableCollection;
 use Vaened\Support\Types\InvalidType;
 use Vaened\SwiftCart\AlreadyAttachedItem;
 use Vaened\SwiftCart\Entities\Identifiable;
-use Vaened\SwiftCart\Summary;
-use Vaened\SwiftCart\TotalSummaries;
+use Vaened\SwiftCart\Totalizer;
 
 use function array_map;
 use function Lambdish\Phunctional\each;
@@ -34,13 +33,6 @@ abstract class CartItems extends ImmutableCollection
         return $this->map(static fn(CartItem $item) => $item->uniqueId());
     }
 
-    public function summary(): Summary
-    {
-        return TotalSummaries::of(
-            $this->map($this->summaries())
-        )->summary();
-    }
-
     public function has(Identifiable $identifiable): bool
     {
         return isset($this->items[$identifiable->uniqueId()]);
@@ -57,6 +49,13 @@ abstract class CartItems extends ImmutableCollection
     public function map(callable $callback): array
     {
         return array_map($callback, $this->items);
+    }
+
+    public function totalizer(): Totalizer
+    {
+        return Totalizer::of(
+            $this->map($this->summaries())
+        );
     }
 
     protected function attach(CartItem $item): void
