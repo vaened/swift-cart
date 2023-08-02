@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests\Carts\Management;
 
-use Vaened\PriceEngine\Adjustments\{Charge, Discount};
+use Vaened\PriceEngine\Adjustments\{AdjusterScheme, Charge, Discount};
 use Vaened\SwiftCart\Entities\Identifiable;
 use Vaened\SwiftCart\Items\CartItem;
 use Vaened\SwiftCart\Tests\Carts\SwiftCartTestCase;
@@ -32,10 +32,7 @@ abstract class SwiftCartManagerTestCase extends SwiftCartTestCase
             ? $item->summary()->charges()->locate($adjuster->code())
             : $item->summary()->discounts()->locate($adjuster->code());
 
-        $this->assertSame(
-            ['code' => $model->code(), 'value' => $model->value(), 'type' => $model->type()],
-            ['code' => $adjuster->code(), 'value' => $adjuster->value(), 'type' => $adjuster->type()]
-        );
+        $this->assertAdjusterEquals($adjuster, $model);
     }
 
     protected function assertCartContains(Product ...$products): void
@@ -66,7 +63,15 @@ abstract class SwiftCartManagerTestCase extends SwiftCartTestCase
                 $tradable->uniqueId(),
                 $tradable->amount(),
             ),
-            $product
+                $product
+        );
+    }
+
+    protected function assertAdjusterEquals(AdjusterScheme $expected, AdjusterScheme $actual): void
+    {
+        $this->assertSame(
+            ['code' => $expected->code(), 'value' => $expected->value(), 'type' => $expected->type()],
+            ['code' => $actual->code(), 'value' => $actual->value(), 'type' => $actual->type()]
         );
     }
 }
