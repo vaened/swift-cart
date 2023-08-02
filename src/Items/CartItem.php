@@ -12,14 +12,15 @@ use Vaened\PriceEngine\Adjustments\Tax\Taxes;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Money\Amount;
 use Vaened\PriceEngine\TotalSummary;
-use Vaened\SwiftCart\Entities\Chargeable;
-use Vaened\SwiftCart\Entities\Discountable;
-use Vaened\SwiftCart\Entities\Identifiable;
-use Vaened\SwiftCart\Entities\Tradable;
+use Vaened\SwiftCart\Attributes;
+use Vaened\SwiftCart\Concerns\HasAttributes;
+use Vaened\SwiftCart\Entities\{Attributable, Chargeable, Discountable, Identifiable, Tradable};
 use Vaened\SwiftCart\SwiftCartConfig;
 
 abstract class CartItem implements Identifiable
 {
+    use HasAttributes;
+
     private readonly Cashier $cashier;
 
     public function __construct(
@@ -28,6 +29,7 @@ abstract class CartItem implements Identifiable
         Taxes                       $taxes = new Taxes([]),
     )
     {
+        $this->setAttributes($tradable instanceof Attributable ? $tradable->attributes() : Attributes::empty());
         $this->cashier = $this->createCashier(
             $tradable->amount(),
             $quantity,
