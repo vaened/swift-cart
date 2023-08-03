@@ -79,7 +79,10 @@ abstract class SwiftCart
 
     private function syncAdjustments(AdjustmentManager $manager): Adjustments
     {
-        if (!$manager->adjusters()->isEmpty()) {
+        if (
+            !$manager->adjusters()->isEmpty() &&
+            !$this->staging()->isEmpty()
+        ) {
             $manager->revalue($this->totalizer()->total());
         }
 
