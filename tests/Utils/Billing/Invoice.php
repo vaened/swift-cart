@@ -10,12 +10,12 @@ namespace Vaened\SwiftCart\Tests\Utils\Billing;
 use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
-use Vaened\SwiftCart\Entities\TradedCommercialTransaction;
+use Vaened\SwiftCart\Entities\RegisteredCommercialTransaction;
 use Vaened\SwiftCart\Entities\CommercialTransactionItems;
 
 use function Lambdish\Phunctional\each;
 
-final class Invoice implements TradedCommercialTransaction
+final class Invoice implements RegisteredCommercialTransaction
 {
     private readonly Adjusters $charges;
 
