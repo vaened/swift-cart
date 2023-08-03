@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Carts;
 
+use Brick\Money\Money;
 use Vaened\PriceEngine\AdjustmentManager;
 use Vaened\PriceEngine\Adjustments;
 use Vaened\PriceEngine\Adjustments\Adjusters;
@@ -14,6 +15,7 @@ use Vaened\Support\Types\ArrayList;
 use Vaened\SwiftCart\Entities\Identifiable;
 use Vaened\SwiftCart\Items\{CartItem, CartItems};
 use Vaened\SwiftCart\Summary;
+use Vaened\SwiftCart\SwiftCartConfig;
 use Vaened\SwiftCart\Totalizer;
 
 abstract class SwiftCart
@@ -63,7 +65,11 @@ abstract class SwiftCart
 
     protected function createManagerOf(Adjusters $adjusters): AdjustmentManager
     {
-        return new AdjustmentManager($adjusters, $this->totalizer()->total(), quantity: 1);
+        return new AdjustmentManager(
+            $adjusters,
+            Money::zero(SwiftCartConfig::defaultCurrency(), SwiftCartConfig::defaultContext()),
+            quantity: 1
+        );
     }
 
     protected function totalizer(): Totalizer
@@ -73,7 +79,10 @@ abstract class SwiftCart
 
     private function syncAdjustments(AdjustmentManager $manager): Adjustments
     {
-        $manager->revalue($this->totalizer()->total());
+        if (!$manager->adjusters()->isEmpty()) {
+            $manager->revalue($this->totalizer()->total());
+        }
+
         return $manager->adjustments();
     }
 }
