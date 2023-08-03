@@ -12,6 +12,14 @@ use Vaened\SwiftCart\Entities\RegisteredCommercialTransaction;
 use Vaened\SwiftCart\Items\CommerceableCartItem;
 use Vaened\SwiftCart\Items\ImmutableCartItems;
 
+/**
+ * Shopping cart for committed transactions.
+ *
+ * This class represents a shopping cart that loads data from
+ * previous records.
+ * Unlike OrderCart, this cart allows for more complete data loading,
+ * especially for complex quotes with pre-assigned fees or discounts.
+ */
 final class SnapshotCart extends ShoppingCart
 {
     public function __construct(RegisteredCommercialTransaction $transaction, Taxes $taxes = new Taxes([]))
