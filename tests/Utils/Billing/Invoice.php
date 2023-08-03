@@ -11,7 +11,7 @@ use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
 use Vaened\SwiftCart\Entities\TradedCommercialTransaction;
-use Vaened\SwiftCart\Entities\TradedCommercialTransactionItems;
+use Vaened\SwiftCart\Entities\CommercialTransactionItems;
 
 use function Lambdish\Phunctional\each;
 
@@ -47,9 +47,9 @@ final class Invoice implements TradedCommercialTransaction
         return $this;
     }
 
-    public function items(): TradedCommercialTransactionItems
+    public function items(): CommercialTransactionItems
     {
-        return new TradedCommercialTransactionItems(
+        return new CommercialTransactionItems(
             $this->items->values()
         );
     }

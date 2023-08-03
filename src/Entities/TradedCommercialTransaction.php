@@ -9,5 +9,5 @@ namespace Vaened\SwiftCart\Entities;
 
 interface TradedCommercialTransaction extends Discountable, Chargeable
 {
-    public function items(): TradedCommercialTransactionItems;
+    public function items(): CommercialTransactionItems;
 }

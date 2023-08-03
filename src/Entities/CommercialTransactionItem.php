@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Entities;
 
-interface Traded extends Tradable, Discountable, Chargeable
+interface CommercialTransactionItem extends Tradable, Discountable, Chargeable
 {
     public function quantity(): int;
 }

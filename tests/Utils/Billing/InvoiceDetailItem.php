@@ -9,10 +9,10 @@ namespace Vaened\SwiftCart\Tests\Utils\Billing;
 
 use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Money\Amount;
-use Vaened\SwiftCart\Entities\Traded;
+use Vaened\SwiftCart\Entities\CommercialTransactionItem;
 use Vaened\SwiftCart\Tests\Utils\Product;
 
-final class InvoiceDetailItem implements Traded
+final class InvoiceDetailItem implements CommercialTransactionItem
 {
     public function __construct(
         private readonly Product   $product,

@@ -8,13 +8,13 @@ declare(strict_types=1);
 namespace Vaened\SwiftCart\Items;
 
 use Vaened\PriceEngine\Adjustments\Tax\Taxes;
-use Vaened\SwiftCart\Entities\Traded;
+use Vaened\SwiftCart\Entities\CommercialTransactionItem;
 
 final class ImmutableCartItem extends CartItem
 {
-    public function __construct(Traded $quoted)
+    public function __construct(CommercialTransactionItem $commercialItem)
     {
-        parent::__construct($quoted, $quoted->quantity(), Taxes::empty());
+        parent::__construct($commercialItem, $commercialItem->quantity(), Taxes::empty());
     }
 
     public function toCommerceable(): CommerceableCartItem

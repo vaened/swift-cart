@@ -11,22 +11,22 @@ use Vaened\Support\Types\ArrayObject;
 use Vaened\SwiftCart\Items\ImmutableCartItem;
 use Vaened\SwiftCart\Items\ImmutableCartItems;
 
-final class TradedCommercialTransactionItems extends ArrayObject
+final class CommercialTransactionItems extends ArrayObject
 {
     public function toImmutables(): ImmutableCartItems
     {
         return new ImmutableCartItems(
-            $this->map(TradedCommercialTransactionItems::toImmutable())
+            $this->map(CommercialTransactionItems::toImmutable())
         );
     }
 
     protected function type(): string
     {
-        return Traded::class;
+        return CommercialTransactionItem::class;
     }
 
     private static function toImmutable(): callable
     {
-        return static fn(Traded $traded) => new ImmutableCartItem($traded);
+        return static fn(CommercialTransactionItem $traded) => new ImmutableCartItem($traded);
     }
 }
