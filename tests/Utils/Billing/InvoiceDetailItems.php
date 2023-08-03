@@ -7,15 +7,10 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests\Utils\Billing;
 
-use Vaened\Support\Types\ArrayObject;
+use Vaened\SwiftCart\Tests\Utils\CommercialTransactionDetailItems;
 
-final class InvoiceDetailItems extends ArrayObject
+final class InvoiceDetailItems extends CommercialTransactionDetailItems
 {
-    public static function from(array $items): self
-    {
-        return new self($items);
-    }
-
     protected function type(): string
     {
         return InvoiceDetailItem::class;

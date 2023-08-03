@@ -10,8 +10,8 @@ namespace Vaened\SwiftCart\Tests\Utils\Billing;
 use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
-use Vaened\SwiftCart\Entities\RegisteredCommercialTransaction;
 use Vaened\SwiftCart\Entities\CommercialTransactionItems;
+use Vaened\SwiftCart\Entities\RegisteredCommercialTransaction;
 
 use function Lambdish\Phunctional\each;
 
@@ -49,9 +49,7 @@ final class Invoice implements RegisteredCommercialTransaction
 
     public function items(): CommercialTransactionItems
     {
-        return new CommercialTransactionItems(
-            $this->items->values()
-        );
+        return $this->items->toCommercialItems();
     }
 
     public function charges(): Adjusters
