@@ -48,4 +48,9 @@ final class Products
             )
         );
     }
+
+    public static function clean(): void
+    {
+        self::$items = [];
+    }
 }

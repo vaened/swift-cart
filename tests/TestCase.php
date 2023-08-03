@@ -11,12 +11,14 @@ use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 use Vaened\SwiftCart\Providers\SimpleCashierProvider;
 use Vaened\SwiftCart\SwiftCartConfig;
 use Vaened\SwiftCart\Tests\Utils\MoneyFactory;
+use Vaened\SwiftCart\Tests\Utils\Products;
 
 abstract class TestCase extends PhpUnitTestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
+        Products::clean();
         $this->setUpConfig();
     }
 
