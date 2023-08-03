@@ -16,21 +16,26 @@ use function Lambdish\Phunctional\map;
 
 final class Products
 {
-    private static array $items = [];
+    public static array $items = [];
+
+    public static function generate(?Amount $amount = null): Product
+    {
+        return Product::create($amount ?? Amount::taxable(MoneyFactory::random()));
+    }
 
     public static function monitor(Amount $amount = null): Product
     {
-        return self::$items[__FUNCTION__] ??= Product::create($amount ?? Amount::taxable(MoneyFactory::random()));
+        return self::$items[__FUNCTION__] ??= self::generate($amount);
     }
 
     public static function keyboard(Amount $amount = null): Product
     {
-        return self::$items[__FUNCTION__] ??= Product::create($amount ?? Amount::taxable(MoneyFactory::random()));
+        return self::$items[__FUNCTION__] ??= self::generate($amount);
     }
 
     public static function mouse(Amount $amount = null): Product
     {
-        return self::$items[__FUNCTION__] ??= Product::create($amount ?? Amount::taxable(MoneyFactory::random()));
+        return self::$items[__FUNCTION__] ??= self::generate($amount);
     }
 
     public static function all(): array
@@ -38,13 +43,11 @@ final class Products
         $reflection = new ReflectionClass(self::class);
         $methods    = $reflection->getMethods(ReflectionMethod::IS_STATIC);
 
-        return filter(
-            static fn(?Product $product) => null != $product,
-            map(
-                static fn(
-                    ReflectionMethod $method
-                ) => $method->getReturnType()->getName() === Product::class ? $method->invoke(null) : null,
-                $methods
+        return map(
+            static fn(ReflectionMethod $method): Product => $method->invoke(null),
+            filter(
+                self::onlyNamedProductGenerator(),
+                $methods,
             )
         );
     }
@@ -52,5 +55,12 @@ final class Products
     public static function clean(): void
     {
         self::$items = [];
+    }
+
+    private static function onlyNamedProductGenerator(): callable
+    {
+        return static function (ReflectionMethod $method): bool {
+            return $method->getName() !== 'generate' && $method->getReturnType()->getName() === Product::class;
+        };
     }
 }
