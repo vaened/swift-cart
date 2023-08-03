@@ -7,22 +7,41 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Carts;
 
+use Vaened\PriceEngine\AdjustmentManager;
+use Vaened\PriceEngine\Adjustments;
+use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\Support\Types\ArrayList;
 use Vaened\SwiftCart\Entities\Identifiable;
-use Vaened\SwiftCart\Items\CartItem;
-use Vaened\SwiftCart\Items\CartItems;
+use Vaened\SwiftCart\Items\{CartItem, CartItems};
 use Vaened\SwiftCart\Summary;
 use Vaened\SwiftCart\Totalizer;
 
 abstract class SwiftCart
 {
-    abstract public function summary(): Summary;
+    abstract public function locate(Identifiable $identifiable): ?CartItem;
 
     abstract protected function staging(): CartItems;
 
-    public function locate(Identifiable $identifiable): ?CartItem
+    abstract protected function globalChargesManager(): AdjustmentManager;
+
+    abstract protected function globalDiscountsManager(): AdjustmentManager;
+
+    public function globalCharges(): Adjustments
     {
-        return $this->staging()->locate($identifiable);
+        return $this->syncAdjustments($this->globalChargesManager());
+    }
+
+    public function globalDiscounts(): Adjustments
+    {
+        return $this->syncAdjustments($this->globalDiscountsManager());
+    }
+
+    public function summary(): Summary
+    {
+        return $this->totalizer()->summary(
+            additionalCharges  : $this->globalCharges()->total(),
+            additionalDiscounts: $this->globalDiscounts()->total(),
+        );
     }
 
     public function has(Identifiable $identifiable): bool
@@ -42,8 +61,19 @@ abstract class SwiftCart
         );
     }
 
+    protected function createManagerOf(Adjusters $adjusters): AdjustmentManager
+    {
+        return new AdjustmentManager($adjusters, $this->totalizer()->total(), quantity: 1);
+    }
+
     protected function totalizer(): Totalizer
     {
         return $this->staging()->totalizer();
+    }
+
+    private function syncAdjustments(AdjustmentManager $manager): Adjustments
+    {
+        $manager->revalue($this->totalizer()->total());
+        return $manager->adjustments();
     }
 }

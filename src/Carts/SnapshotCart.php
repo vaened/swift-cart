@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Carts;
 
+use Vaened\PriceEngine\AdjustmentManager;
 use Vaened\SwiftCart\Entities\Identifiable;
 use Vaened\SwiftCart\Entities\TradedCommercialTransaction;
 use Vaened\SwiftCart\Items\ImmutableCartItem;
@@ -18,12 +19,18 @@ final class SnapshotCart extends SwiftCart
 {
     private readonly ImmutableCartItems $immutables;
 
-    private ImmutableCartItems          $items;
+    private readonly ImmutableCartItems $items;
+
+    private readonly AdjustmentManager  $charges;
+
+    private readonly AdjustmentManager  $discounts;
 
     public function __construct(TradedCommercialTransaction $transaction)
     {
         $this->immutables = $transaction->items()->toImmutables();
         $this->items      = new ImmutableCartItems([]);
+        $this->charges    = $this->createManagerOf($transaction->charges());
+        $this->discounts  = $this->createManagerOf($transaction->discounts());
     }
 
     public function locate(Identifiable $identifiable): ?ImmutableCartItem
@@ -55,6 +62,16 @@ final class SnapshotCart extends SwiftCart
     protected function staging(): ImmutableCartItems
     {
         return $this->items;
+    }
+
+    protected function globalChargesManager(): AdjustmentManager
+    {
+        return $this->charges;
+    }
+
+    protected function globalDiscountsManager(): AdjustmentManager
+    {
+        return $this->discounts;
     }
 
     private function ensureValidItem(?ImmutableCartItem $item): void
