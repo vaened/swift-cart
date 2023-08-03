@@ -9,13 +9,12 @@ namespace Vaened\SwiftCart\Tests\Carts\Management\ShoppingCarts;
 
 use Vaened\SwiftCart\Carts\OrderCart;
 use Vaened\SwiftCart\Tests\Utils\Billier;
+use Vaened\SwiftCart\Tests\Utils\Carts;
 use Vaened\SwiftCart\Tests\Utils\Products;
 
 final class OrderCartTest extends ShoppingCartManagerTestCase
 {
-    private readonly OrderCart $swiftCart;
-
-    public function test_pull_item_from_transaction(): void
+    public function test_pull_item_from_transaction2(): void
     {
         $this->cart()->pull(Products::monitor());
 
@@ -38,8 +37,8 @@ final class OrderCartTest extends ShoppingCartManagerTestCase
 
     protected function cart(): OrderCart
     {
-        return $this->swiftCart ??= new OrderCart(
+        return Carts::memoize(fn(): OrderCart => new OrderCart(
             Billier::account(Products::all())
-        );
+        ));
     }
 }
