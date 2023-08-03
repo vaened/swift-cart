@@ -63,7 +63,7 @@ abstract class SwiftCartManagerTestCase extends SwiftCartTestCase
                 $tradable->uniqueId(),
                 $tradable->amount(),
             ),
-                $product
+            $product
         );
     }
 

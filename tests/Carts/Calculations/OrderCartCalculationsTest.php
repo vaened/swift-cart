@@ -9,14 +9,13 @@ namespace Vaened\SwiftCart\Tests\Carts\Calculations;
 
 use Vaened\PriceEngine\Adjustments\{Adjusters, Charge, Discount, Tax, Tax\TaxCodes};
 use Vaened\PriceEngine\Money\Amount;
-use Vaened\SwiftCart\Carts\SnapshotCart;
-use Vaened\SwiftCart\Tests\Utils\{MoneyFactory, Products, Summary, TaxCode};
+use Vaened\SwiftCart\Carts\OrderCart;
+use Vaened\SwiftCart\Tests\Utils\{MoneyFactory, Products, Quotation\AccountDetailItem, Summary, TaxCode};
 use Vaened\SwiftCart\Tests\Utils\Billier;
-use Vaened\SwiftCart\Tests\Utils\Billing\InvoiceDetailItem;
 
-final class SnapshotCartCalculationsTest extends SwiftCartCalculationsTestCase
+final class OrderCartCalculationsTest extends SwiftCartCalculationsTestCase
 {
-    private readonly SnapshotCart $swiftCart;
+    private readonly OrderCart $swiftCart;
 
     public function test_pull_item_recalculates_totals(): void
     {
@@ -66,11 +65,11 @@ final class SnapshotCartCalculationsTest extends SwiftCartCalculationsTestCase
         $this->assertTotals(Summary::zero());
     }
 
-    protected function cart(): SnapshotCart
+    protected function cart(): OrderCart
     {
-        return $this->swiftCart ??= new SnapshotCart(
-            Billier::invoice([
-                InvoiceDetailItem::create(
+        return $this->swiftCart ??= new OrderCart(
+            Billier::account([
+                AccountDetailItem::create(
                     Products::mouse(),
                     Amount::taxexempt(MoneyFactory::of(50)),
                     quantity: 2,
@@ -78,7 +77,7 @@ final class SnapshotCartCalculationsTest extends SwiftCartCalculationsTestCase
                         Charge::proporcional(10)
                     ])
                 ),
-                InvoiceDetailItem::create(
+                AccountDetailItem::create(
                     Products::monitor(),
                     Amount::taxable(MoneyFactory::of(890), TaxCodes::any())->impose([
                         Tax\Inclusive::proporcional(18, TaxCode::IGV),
@@ -87,7 +86,7 @@ final class SnapshotCartCalculationsTest extends SwiftCartCalculationsTestCase
                         Discount::proporcional(5)
                     ])
                 ),
-                InvoiceDetailItem::create(
+                AccountDetailItem::create(
                     Products::keyboard(),
                     Amount::taxable(MoneyFactory::of(250), TaxCodes::only([TaxCode::ISC]))->impose([
                         Tax\Inclusive::fixed(10, TaxCode::ISC),

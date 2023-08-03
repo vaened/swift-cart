@@ -10,6 +10,9 @@ namespace Vaened\SwiftCart\Tests\Utils;
 use Vaened\SwiftCart\Tests\Utils\Billing\Invoice;
 use Vaened\SwiftCart\Tests\Utils\Billing\InvoiceDetailItem;
 use Vaened\SwiftCart\Tests\Utils\Billing\InvoiceDetailItems;
+use Vaened\SwiftCart\Tests\Utils\Quotation\Account;
+use Vaened\SwiftCart\Tests\Utils\Quotation\AccountDetailItem;
+use Vaened\SwiftCart\Tests\Utils\Quotation\AccountDetailItems;
 
 use function Lambdish\Phunctional\map;
 
@@ -19,15 +22,24 @@ final class Billier
     {
         return Invoice::create(
             InvoiceDetailItems::from(
-                map(self::toDetailItem(), $detail)
+                map(self::toDetailItemOf(InvoiceDetailItem::class), $detail)
             )
         );
     }
 
-    private static function toDetailItem(): callable
+    public static function account(array $detail): Account
     {
-        return static fn(Product|InvoiceDetailItem $item): InvoiceDetailItem => $item instanceof InvoiceDetailItem
+        return Account::create(
+            AccountDetailItems::from(
+                map(self::toDetailItemOf(AccountDetailItem::class), $detail)
+            )
+        );
+    }
+
+    private static function toDetailItemOf(string $detail): callable
+    {
+        return static fn(Product|CommercialTransactionDetailItem $item): CommercialTransactionDetailItem => $item instanceof $detail
             ? $item
-            : InvoiceDetailItem::from($item);
+            : call_user_func_array([$detail, 'from'], [$item]);
     }
 }
