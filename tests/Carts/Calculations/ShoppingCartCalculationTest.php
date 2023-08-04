@@ -13,6 +13,7 @@ use Vaened\PriceEngine\Adjustments\Tax;
 use Vaened\PriceEngine\Adjustments\Tax\{Inclusive, TaxCodes, Taxes};
 use Vaened\PriceEngine\Money\Amount;
 use Vaened\SwiftCart\Carts\ShoppingCart;
+use Vaened\SwiftCart\Tests\SwiftCartCalculationsTestCase;
 use Vaened\SwiftCart\Tests\Utils\{Carts, MoneyFactory, Products, Summary, TaxCode};
 
 final class ShoppingCartCalculationTest extends SwiftCartCalculationsTestCase

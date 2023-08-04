@@ -10,6 +10,7 @@ namespace Vaened\SwiftCart\Tests\Carts\Calculations;
 use Vaened\PriceEngine\Adjustments\{Adjusters, Charge, Discount, Tax, Tax\TaxCodes};
 use Vaened\PriceEngine\Money\Amount;
 use Vaened\SwiftCart\Carts\OrderCart;
+use Vaened\SwiftCart\Tests\SwiftCartCalculationsTestCase;
 use Vaened\SwiftCart\Tests\Utils\{MoneyFactory, Products, Quotation\AccountDetailItem, Summary, TaxCode};
 use Vaened\SwiftCart\Tests\Utils\Billier;
 

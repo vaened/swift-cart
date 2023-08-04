@@ -10,7 +10,7 @@ namespace Vaened\SwiftCart\Tests\Carts\Management;
 use Vaened\PriceEngine\Adjustments\{AdjusterScheme, Charge, Discount};
 use Vaened\SwiftCart\Entities\Identifiable;
 use Vaened\SwiftCart\Items\CartItem;
-use Vaened\SwiftCart\Tests\Carts\SwiftCartTestCase;
+use Vaened\SwiftCart\Tests\SwiftCartTestCase;
 use Vaened\SwiftCart\Tests\Utils\Product;
 
 use function Lambdish\Phunctional\map;

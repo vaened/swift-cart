@@ -5,12 +5,11 @@
 
 declare(strict_types=1);
 
-namespace Vaened\SwiftCart\Tests\Carts;
+namespace Vaened\SwiftCart\Tests;
 
 use Vaened\PriceEngine\Adjustment;
 use Vaened\PriceEngine\Adjustments;
 use Vaened\SwiftCart\Carts\SwiftCart;
-use Vaened\SwiftCart\Tests\TestCase;
 
 use function Lambdish\Phunctional\each;
 
