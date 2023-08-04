@@ -41,7 +41,7 @@ abstract class CartItems extends ImmutableCollection
     public function remove(Identifiable $identifiable): void
     {
         $this->items = filter(
-            static fn(Identifiable $item) => $identifiable->uniqueId() !== $identifiable->uniqueId(),
+            static fn(Identifiable $item) => $item->uniqueId() !== $identifiable->uniqueId(),
             $this->items
         );
     }
