@@ -20,16 +20,20 @@ final class Totalizer extends ArrayObject
 
     public function summary(Money $additionalCharges = null, Money $additionalDiscounts = null): Summary
     {
-        $subtotal = $this->subtotal();
+        $subtotal  = $this->subtotal();
+        $taxes     = $this->totalTaxes();
+        $charges   = $this->totalCharges()->plus(null === $additionalCharges ? 0 : $additionalCharges);
+        $discounts = $this->totalDiscounts()->plus(null === $additionalDiscounts ? 0 : $additionalDiscounts);
 
         return new Summary(
             subtotal      : $subtotal,
-            totalTaxes    : $this->totalTaxes(),
-            totalCharges  : $this->totalCharges()
-                                 ->plus(null === $additionalCharges ? 0 : $additionalCharges),
-            totalDiscounts: $this->totalDiscounts()
-                                 ->plus(null === $additionalDiscounts ? 0 : $additionalDiscounts),
-            total         : $this->total(),
+            totalTaxes    : $taxes,
+            totalCharges  : $charges,
+            totalDiscounts: $discounts,
+            total         : $subtotal
+                                ->plus($taxes)
+                                ->plus($charges)
+                                ->minus($discounts),
         );
     }
 
