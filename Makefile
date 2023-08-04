@@ -2,7 +2,7 @@ current-dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 .PHONY: build clean deps composer-install composer-update composer-require composer-require-module
 
-IMAGE=php-swift-cart
+IMAGE=$(notdir $(patsubst %/,%,$(current-dir)))
 
 build: deps
 	docker build -t $(IMAGE) .
