@@ -14,7 +14,7 @@ use Vaened\SwiftCart\Tests\Utils\Products;
 
 final class OrderCartTest extends ShoppingCartManagerTestCase
 {
-    public function test_pull_item_from_transaction2(): void
+    public function test_pull_item_from_transaction(): void
     {
         $this->cart()->pull(Products::monitor());
 
