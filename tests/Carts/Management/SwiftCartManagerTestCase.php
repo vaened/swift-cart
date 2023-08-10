@@ -40,7 +40,7 @@ abstract class SwiftCartManagerTestCase extends SwiftCartTestCase
         map(function (Product $product) {
             $item = $this->cart()
                          ->items()
-                         ->contains(static fn(CartItem $item) => $item->uniqueId() === $product->uniqueId());
+                         ->pick(static fn(CartItem $item) => $item->uniqueId() === $product->uniqueId());
 
             $this->assertCartItemIs($product, $item);
         }, $products);
