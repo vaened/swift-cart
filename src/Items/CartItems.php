@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Items;
 
-use Vaened\Support\Types\ImmutableCollection;
+use Vaened\Support\Types\AbstractList;
 use Vaened\Support\Types\InvalidType;
 use Vaened\SwiftCart\AlreadyAttachedItem;
 use Vaened\SwiftCart\Entities\Identifiable;
@@ -18,9 +18,9 @@ use function Lambdish\Phunctional\each;
 use function Lambdish\Phunctional\filter;
 use function sprintf;
 
-abstract class CartItems extends ImmutableCollection
+abstract class CartItems extends AbstractList
 {
-    public function __construct(array $items = [])
+    public function __construct(iterable $items = [])
     {
         parent::__construct([]);
         $this->reindex($items);

@@ -7,10 +7,10 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests\Utils;
 
-use Vaened\Support\Types\ArrayObject;
+use Vaened\Support\Types\TypedList;
 use Vaened\SwiftCart\Entities\CommercialTransactionItems;
 
-abstract class CommercialTransactionDetailItems extends ArrayObject
+abstract class CommercialTransactionDetailItems extends TypedList
 {
     public static function from(array $items): static
     {

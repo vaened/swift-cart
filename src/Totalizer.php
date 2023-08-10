@@ -9,9 +9,9 @@ namespace Vaened\SwiftCart;
 
 use Brick\Money\Money;
 use Vaened\PriceEngine\TotalSummary;
-use Vaened\Support\Types\ArrayObject;
+use Vaened\Support\Types\TypedList;
 
-final class Totalizer extends ArrayObject
+final class Totalizer extends TypedList
 {
     public static function of(array $summaries): self
     {
