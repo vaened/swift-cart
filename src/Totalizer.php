@@ -9,11 +9,11 @@ namespace Vaened\SwiftCart;
 
 use Brick\Money\Money;
 use Vaened\PriceEngine\TotalSummary;
-use Vaened\Support\Types\TypedList;
+use Vaened\Support\Types\SecureList;
 
-final class Totalizer extends TypedList
+final class Totalizer extends SecureList
 {
-    public static function of(array $summaries): self
+    public static function of(iterable $summaries): self
     {
         return new self($summaries);
     }
@@ -42,11 +42,6 @@ final class Totalizer extends TypedList
         return $this->sum(
             static fn(TotalSummary $summary) => $summary->total()
         );
-    }
-
-    protected function type(): string
-    {
-        return TotalSummary::class;
     }
 
     private function subtotal(): Money
@@ -89,5 +84,10 @@ final class Totalizer extends TypedList
     private function zero(): Money
     {
         return Money::zero(SwiftCartConfig::defaultCurrency(), SwiftCartConfig::defaultContext());
+    }
+
+    protected static function type(): string
+    {
+        return TotalSummary::class;
     }
 }

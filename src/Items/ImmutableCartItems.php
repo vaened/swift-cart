@@ -44,13 +44,13 @@ final class ImmutableCartItems extends CartItems
         $items->each($this->add());
     }
 
-    protected function type(): string
-    {
-        return ImmutableCartItem::class;
-    }
-
     private function add(): callable
     {
         return fn(ImmutableCartItem $item) => $this->push($item);
+    }
+
+    protected static function type(): string
+    {
+        return ImmutableCartItem::class;
     }
 }
