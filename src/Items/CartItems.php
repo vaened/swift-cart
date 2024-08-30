@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Vaened\SwiftCart\Items;
 
 use Vaened\Support\Types\AbstractList;
+use Vaened\Support\Types\InvalidSafelistItem;
 use Vaened\Support\Types\InvalidType;
 use Vaened\Support\Types\SecureList;
 use Vaened\SwiftCart\AlreadyAttachedItem;
@@ -26,7 +27,7 @@ abstract class CartItems extends SecureList
         $this->reindex($items);
     }
 
-    abstract protected static function type(): string;
+    abstract public static function type(): string;
 
     public function ids(): array
     {
@@ -83,7 +84,7 @@ abstract class CartItems extends SecureList
     {
         $type = $this->type();
         if (!$item instanceof CartItem || !$item instanceof $type) {
-            throw new InvalidType(static::class, sprintf('%s child of %s', $type, CartItem::class), $item::class);
+            throw new InvalidSafelistItem(static::class, sprintf('%s child of %s', $type, CartItem::class), $item::class);
         }
     }
 }

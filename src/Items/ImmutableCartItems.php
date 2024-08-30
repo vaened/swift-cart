@@ -49,7 +49,7 @@ final class ImmutableCartItems extends CartItems
         return fn(ImmutableCartItem $item) => $this->push($item);
     }
 
-    protected static function type(): string
+    public static function type(): string
     {
         return ImmutableCartItem::class;
     }

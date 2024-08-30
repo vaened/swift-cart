@@ -11,7 +11,7 @@ use Vaened\SwiftCart\Tests\Utils\CommercialTransactionDetailItems;
 
 final class AccountDetailItems extends CommercialTransactionDetailItems
 {
-    protected static function type(): string
+    public static function type(): string
     {
         return AccountDetailItem::class;
     }

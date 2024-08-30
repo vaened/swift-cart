@@ -31,7 +31,7 @@ final class CommerceableCartItems extends CartItems
         $this->each(static fn(CommerceableCartItem $item) => $item->apply(...$discounts));
     }
 
-    protected static function type(): string
+    public static function type(): string
     {
         return CommerceableCartItem::class;
     }

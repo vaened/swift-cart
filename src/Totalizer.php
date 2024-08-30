@@ -86,7 +86,7 @@ final class Totalizer extends SecureList
         return Money::zero(SwiftCartConfig::defaultCurrency(), SwiftCartConfig::defaultContext());
     }
 
-    protected static function type(): string
+    public static function type(): string
     {
         return TotalSummary::class;
     }

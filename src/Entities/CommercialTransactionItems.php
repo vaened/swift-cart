@@ -20,7 +20,7 @@ final class CommercialTransactionItems extends SecureList
         );
     }
 
-    protected static function type(): string
+    public static function type(): string
     {
         return CommercialTransactionItem::class;
     }
