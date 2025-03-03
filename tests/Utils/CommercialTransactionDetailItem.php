@@ -7,18 +7,18 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests\Utils;
 
-use Vaened\PriceEngine\Adjustments\Adjusters;
+use Vaened\PriceEngine\Adjustments\Adjustments;
 use Vaened\PriceEngine\Money\Amount;
 use Vaened\SwiftCart\Entities\CommercialTransactionItem;
 
 abstract class CommercialTransactionDetailItem implements CommercialTransactionItem
 {
     public function __construct(
-        private readonly Product   $product,
-        private readonly Amount    $amount,
-        private readonly int       $quantity,
-        private readonly Adjusters $charges,
-        private readonly Adjusters $discounts,
+        private readonly Product     $product,
+        private readonly Amount      $amount,
+        private readonly int         $quantity,
+        private readonly Adjustments $charges,
+        private readonly Adjustments $discounts,
 
     )
     {
@@ -26,18 +26,18 @@ abstract class CommercialTransactionDetailItem implements CommercialTransactionI
 
     public static function from(Product $product): static
     {
-        return new static($product, $product->amount(), 1, Adjusters::empty(), Adjusters::empty());
+        return new static($product, $product->amount(), 1, Adjustments::empty(), Adjustments::empty());
     }
 
     public static function create(
-        Product   $product,
-        Amount    $amount,
-        int       $quantity = 1,
-        Adjusters $charges = null,
-        Adjusters $discounts = null,
+        Product     $product,
+        Amount      $amount,
+        int         $quantity = 1,
+        Adjustments $charges = null,
+        Adjustments $discounts = null,
     ): static
     {
-        return new static($product, $amount, $quantity, $charges ?? Adjusters::empty(), $discounts ?? Adjusters::empty());
+        return new static($product, $amount, $quantity, $charges ?? Adjustments::empty(), $discounts ?? Adjustments::empty());
     }
 
     public function uniqueId(): string
@@ -55,12 +55,12 @@ abstract class CommercialTransactionDetailItem implements CommercialTransactionI
         return $this->quantity;
     }
 
-    public function discounts(): Adjusters
+    public function discounts(): Adjustments
     {
         return $this->discounts;
     }
 
-    public function charges(): Adjusters
+    public function charges(): Adjustments
     {
         return $this->charges;
     }

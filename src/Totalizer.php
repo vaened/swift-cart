@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Vaened\SwiftCart;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\TotalSummary;
+use Vaened\PriceEngine\Summary as TotalSummary;
 use Vaened\Support\Types\SecureList;
 
 final class Totalizer extends SecureList
@@ -16,6 +16,11 @@ final class Totalizer extends SecureList
     public static function of(iterable $summaries): self
     {
         return new self($summaries);
+    }
+
+    public static function type(): string
+    {
+        return TotalSummary::class;
     }
 
     public function summary(Money $additionalCharges = null, Money $additionalDiscounts = null): Summary
@@ -31,9 +36,9 @@ final class Totalizer extends SecureList
             totalCharges  : $charges,
             totalDiscounts: $discounts,
             total         : $subtotal
-                                ->plus($taxes)
-                                ->plus($charges)
-                                ->minus($discounts),
+                ->plus($taxes)
+                ->plus($charges)
+                ->minus($discounts),
         );
     }
 
@@ -84,10 +89,5 @@ final class Totalizer extends SecureList
     private function zero(): Money
     {
         return Money::zero(SwiftCartConfig::defaultCurrency(), SwiftCartConfig::defaultContext());
-    }
-
-    public static function type(): string
-    {
-        return TotalSummary::class;
     }
 }

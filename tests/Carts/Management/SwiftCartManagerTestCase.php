@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests\Carts\Management;
 
-use Vaened\PriceEngine\Adjustments\{AdjusterScheme, Charge, Discount};
+use Vaened\PriceEngine\Adjustments\{AdjustmentScheme, Charge, Discount};
 use Vaened\SwiftCart\Entities\Identifiable;
 use Vaened\SwiftCart\Items\CartItem;
 use Vaened\SwiftCart\Tests\SwiftCartTestCase;
@@ -67,7 +67,7 @@ abstract class SwiftCartManagerTestCase extends SwiftCartTestCase
         );
     }
 
-    protected function assertAdjusterEquals(AdjusterScheme $expected, AdjusterScheme $actual): void
+    protected function assertAdjusterEquals(AdjustmentScheme $expected, AdjustmentScheme $actual): void
     {
         $this->assertSame(
             ['code' => $expected->code(), 'value' => $expected->value(), 'type' => $expected->type()],

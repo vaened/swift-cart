@@ -10,7 +10,7 @@ namespace Vaened\SwiftCart\Carts;
 use BackedEnum;
 use UnitEnum;
 use Vaened\PriceEngine\AdjustmentManager;
-use Vaened\PriceEngine\Adjustments\{Adjusters, Charge, Discount, Tax\Taxes};
+use Vaened\PriceEngine\Adjustments\{Adjustments, Charge, Discount, Taxation\Taxes};
 use Vaened\SwiftCart\Entities\{Identifiable, Tradable};
 use Vaened\SwiftCart\Items\{CommerceableCartItem, CommerceableCartItems};
 
@@ -34,8 +34,8 @@ class ShoppingCart extends SwiftCart
     )
     {
         $this->items     = new CommerceableCartItems();
-        $this->charges   = $this->createManagerOf(Adjusters::empty());
-        $this->discounts = $this->createManagerOf(Adjusters::empty());
+        $this->charges   = $this->createManagerOf(Adjustments::empty());
+        $this->discounts = $this->createManagerOf(Adjustments::empty());
     }
 
     public function addAsGlobal(Charge ...$charges): void

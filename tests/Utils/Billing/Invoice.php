@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests\Utils\Billing;
 
-use Vaened\PriceEngine\Adjustments\Adjusters;
+use Vaened\PriceEngine\Adjustments\Adjustments;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
 use Vaened\SwiftCart\Entities\CommercialTransactionItems;
@@ -17,16 +17,16 @@ use function Lambdish\Phunctional\each;
 
 final class Invoice implements RegisteredCommercialTransaction
 {
-    private readonly Adjusters $charges;
+    private readonly Adjustments $charges;
 
-    private readonly Adjusters $discounts;
+    private readonly Adjustments $discounts;
 
     public function __construct(
         private readonly InvoiceDetailItems $items,
     )
     {
-        $this->charges   = Adjusters::empty();
-        $this->discounts = Adjusters::empty();
+        $this->charges   = Adjustments::empty();
+        $this->discounts = Adjustments::empty();
     }
 
     public static function create(InvoiceDetailItems $items): self
@@ -52,12 +52,12 @@ final class Invoice implements RegisteredCommercialTransaction
         return $this->items->toCommercialItems();
     }
 
-    public function charges(): Adjusters
+    public function charges(): Adjustments
     {
         return $this->charges;
     }
 
-    public function discounts(): Adjusters
+    public function discounts(): Adjustments
     {
         return $this->discounts;
     }

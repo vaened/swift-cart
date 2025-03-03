@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Vaened\SwiftCart\Tests\Carts\Management\ShoppingCarts;
 
 use PHPUnit\Framework\Attributes\Test;
-use Vaened\PriceEngine\Adjustments\AdjusterScheme;
+use Vaened\PriceEngine\Adjustments\AdjustmentScheme;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
 use Vaened\SwiftCart\Carts\ShoppingCart;
@@ -48,15 +48,15 @@ abstract class ShoppingCartManagerTestCase extends SwiftCartManagerTestCase
     #[Test]
     public function add_charge_to_cart(): void
     {
-        $this->cart()->addAsGlobal(Charge::proporcional(10)->named('DELIVERY'));
+        $this->cart()->addAsGlobal(Charge::proportional(10)->named('DELIVERY'));
 
-        $this->assertCartHas(Charge::proporcional(10)->named('DELIVERY'));
+        $this->assertCartHas(Charge::proportional(10)->named('DELIVERY'));
     }
 
     #[Test]
     public function remove_charge_from_cart(): void
     {
-        $charge = Charge::proporcional(20)->named('DELIVERY');
+        $charge = Charge::proportional(20)->named('DELIVERY');
         $this->cart()->addAsGlobal($charge);
 
         $this->cart()->revertGlobalCharge('DELIVERY');
@@ -67,15 +67,15 @@ abstract class ShoppingCartManagerTestCase extends SwiftCartManagerTestCase
     #[Test]
     public function add_discount_to_cart(): void
     {
-        $this->cart()->applyAsGlobal(Discount::proporcional(20)->named('NEW_USERS'));
+        $this->cart()->applyAsGlobal(Discount::proportional(20)->named('NEW_USERS'));
 
-        $this->assertCartHas(Discount::proporcional(20)->named('NEW_USERS'));
+        $this->assertCartHas(Discount::proportional(20)->named('NEW_USERS'));
     }
 
     #[Test]
     public function remove_discount_from_cart(): void
     {
-        $discount = Discount::proporcional(20)->named('NEW_USERS');
+        $discount = Discount::proportional(20)->named('NEW_USERS');
         $this->cart()->applyAsGlobal($discount);
 
         $this->cart()->cancelGlobalDiscount('NEW_USERS');
@@ -95,7 +95,7 @@ abstract class ShoppingCartManagerTestCase extends SwiftCartManagerTestCase
         $this->assertNull($model);
     }
 
-    private function locateAdjusterFromCart(Charge|Discount $adjuster): ?AdjusterScheme
+    private function locateAdjusterFromCart(Charge|Discount $adjuster): ?AdjustmentScheme
     {
         return $adjuster instanceof Charge
             ? $this->cart()->globalCharges()->locate($adjuster->code())

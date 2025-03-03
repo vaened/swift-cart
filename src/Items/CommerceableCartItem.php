@@ -11,7 +11,7 @@ use BackedEnum;
 use UnitEnum;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
-use Vaened\PriceEngine\Adjustments\Tax\Taxes;
+use Vaened\PriceEngine\Adjustments\Taxation\Taxes;
 use Vaened\SwiftCart\Entities\Chargeable;
 use Vaened\SwiftCart\Entities\Discountable;
 use Vaened\SwiftCart\Entities\Tradable;

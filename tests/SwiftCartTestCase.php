@@ -7,8 +7,8 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests;
 
-use Vaened\PriceEngine\Adjustment;
-use Vaened\PriceEngine\Adjustments;
+use Vaened\PriceEngine\Modifier;
+use Vaened\PriceEngine\Modifiers;
 use Vaened\SwiftCart\Carts\SwiftCart;
 
 use function Lambdish\Phunctional\each;
@@ -17,7 +17,7 @@ abstract class SwiftCartTestCase extends TestCase
 {
     abstract protected function cart(): SwiftCart;
 
-    protected function assertAdjustments(Adjustment ...$expected): void
+    protected function assertAdjustments(Modifier ...$expected): void
     {
         $adjustments = self::collect([
             ...$this->cart()->globalCharges()->items(),
@@ -30,10 +30,10 @@ abstract class SwiftCartTestCase extends TestCase
         );
     }
 
-    private function assertAdjustmentEquals(Adjustments $adjustments): callable
+    private function assertAdjustmentEquals(Modifiers $modifiers): callable
     {
-        return static function (Adjustment $expected) use ($adjustments) {
-            $adjustment = $adjustments->locate($expected->code());
+        return static function (Modifier $expected) use ($modifiers) {
+            $adjustment = $modifiers->locate($expected->code());
 
             self::assertNotNull(
                 $adjustment,

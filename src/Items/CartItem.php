@@ -7,11 +7,11 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Items;
 
-use Vaened\PriceEngine\Adjustments\Adjusters;
-use Vaened\PriceEngine\Adjustments\Tax\Taxes;
+use Vaened\PriceEngine\Adjustments\Adjustments;
+use Vaened\PriceEngine\Adjustments\Taxation\Taxes;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Money\Amount;
-use Vaened\PriceEngine\TotalSummary;
+use Vaened\PriceEngine\Summary;
 use Vaened\SwiftCart\Attributes;
 use Vaened\SwiftCart\Concerns\HasAttributes;
 use Vaened\SwiftCart\Entities\{Attributable, Chargeable, Discountable, Identifiable, Tradable};
@@ -34,8 +34,8 @@ abstract class CartItem implements Identifiable
             $tradable->amount(),
             $quantity,
             $taxes,
-            $tradable instanceof Chargeable ? $tradable->charges() : Adjusters::empty(),
-            $tradable instanceof Discountable ? $tradable->discounts() : Adjusters::empty()
+            $tradable instanceof Chargeable ? $tradable->charges() : Adjustments::empty(),
+            $tradable instanceof Discountable ? $tradable->discounts() : Adjustments::empty()
         );
     }
 
@@ -49,7 +49,7 @@ abstract class CartItem implements Identifiable
         return $this->cashier->quantity();
     }
 
-    public function summary(): TotalSummary
+    public function summary(): Summary
     {
         return $this->cashier;
     }
@@ -68,8 +68,8 @@ abstract class CartItem implements Identifiable
         Amount    $amount,
         int       $quantity,
         Taxes     $taxes,
-        Adjusters $charges,
-        Adjusters $discounts
+        Adjustments $charges,
+        Adjustments $discounts
     ): Cashier
     {
         return SwiftCartConfig::provider()->createCashier($amount, $quantity, $taxes, $charges, $discounts);

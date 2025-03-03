@@ -17,7 +17,7 @@ final class AlreadyAttachedItem extends SwiftCartException
     public function __construct(Tradable $quotable, int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct(
-            sprintf('the <%s<%s>> element is already loaded in the list', $quotable->description(), $quotable->uniqueId()),
+            sprintf('the <%s> element is already loaded in the list', $quotable->uniqueId()),
             $code,
             $previous);
     }

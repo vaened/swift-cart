@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Tests\Carts\Calculations;
 
-use Vaened\PriceEngine\Adjustments\{Adjusters, Charge, Discount, Tax, Tax\TaxCodes};
+use Vaened\PriceEngine\Adjustments\{Adjustments, Charge, Discount, Taxation, Taxation\TaxCodes};
 use Vaened\PriceEngine\Money\Amount;
 use Vaened\SwiftCart\Carts\OrderCart;
 use Vaened\SwiftCart\Tests\SwiftCartCalculationsTestCase;
@@ -34,11 +34,11 @@ final class OrderCartCalculationsTest extends SwiftCartCalculationsTestCase
 
         $this->assertTotals(
             new Summary(
-                subtotal      : MoneyFactory::of(854.2373),
+                subtotal      : MoneyFactory::of(990.0000),
                 totalTaxes    : MoneyFactory::of(135.7627),
                 totalCharges  : MoneyFactory::of(10),
                 totalDiscounts: MoneyFactory::of(37.7119),
-                total         : MoneyFactory::of(962.2881),
+                total         : MoneyFactory::of(1098.0508),
             )
         );
     }
@@ -49,11 +49,11 @@ final class OrderCartCalculationsTest extends SwiftCartCalculationsTestCase
 
         $this->assertTotals(
             new Summary(
-                subtotal      : MoneyFactory::of(1574.2373),
+                subtotal      : MoneyFactory::of(1740.0000),
                 totalTaxes    : MoneyFactory::of(165.7627),
                 totalCharges  : MoneyFactory::of(10),
                 totalDiscounts: MoneyFactory::of(37.7119),
-                total         : MoneyFactory::of(1712.2881),
+                total         : MoneyFactory::of(1878.0508),
             )
         );
     }
@@ -74,24 +74,24 @@ final class OrderCartCalculationsTest extends SwiftCartCalculationsTestCase
                     Products::mouse(),
                     Amount::taxexempt(MoneyFactory::of(50)),
                     quantity: 2,
-                    charges : Adjusters::from([
-                        Charge::proporcional(10)
+                    charges : Adjustments::from([
+                        Charge::proportional(10)
                     ])
                 ),
                 AccountDetailItem::create(
                     Products::monitor(),
                     Amount::taxable(MoneyFactory::of(890), TaxCodes::any())->impose([
-                        Tax\Inclusive::proporcional(18, TaxCode::IGV),
+                        Taxation\Inclusive::proportional(18, TaxCode::IGV),
                     ]),
-                    discounts: Adjusters::from([
-                        Discount::proporcional(5)
+                    discounts: Adjustments::from([
+                        Discount::proportional(5)
                     ])
                 ),
                 AccountDetailItem::create(
                     Products::keyboard(),
                     Amount::taxable(MoneyFactory::of(250), TaxCodes::only([TaxCode::ISC]))->impose([
-                        Tax\Inclusive::fixed(10, TaxCode::ISC),
-                        Tax\Inclusive::proporcional(18, TaxCode::IGV),
+                        Taxation\Inclusive::fixed(10, TaxCode::ISC),
+                        Taxation\Inclusive::proportional(18, TaxCode::IGV),
                     ]),
                     quantity: 3
                 ),

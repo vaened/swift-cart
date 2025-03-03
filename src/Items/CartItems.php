@@ -9,7 +9,6 @@ namespace Vaened\SwiftCart\Items;
 
 use Vaened\Support\Types\AbstractList;
 use Vaened\Support\Types\InvalidSafelistItem;
-use Vaened\Support\Types\InvalidType;
 use Vaened\Support\Types\SecureList;
 use Vaened\SwiftCart\AlreadyAttachedItem;
 use Vaened\SwiftCart\Entities\Identifiable;

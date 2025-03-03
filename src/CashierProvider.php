@@ -7,8 +7,8 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart;
 
-use Vaened\PriceEngine\Adjustments\Adjusters;
-use Vaened\PriceEngine\Adjustments\Tax\Taxes;
+use Vaened\PriceEngine\Adjustments\Adjustments;
+use Vaened\PriceEngine\Adjustments\Taxation\Taxes;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Money\Amount;
 
@@ -18,7 +18,7 @@ interface CashierProvider
         Amount    $amount,
         int       $quantity,
         Taxes     $taxes,
-        Adjusters $charges,
-        Adjusters $discounts,
+        Adjustments $charges,
+        Adjustments $discounts,
     ): Cashier;
 }

@@ -8,9 +8,9 @@ declare(strict_types=1);
 namespace Vaened\SwiftCart\Tests;
 
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
-use Vaened\PriceEngine\Adjustment;
-use Vaened\PriceEngine\Adjustments;
-use Vaened\PriceEngine\Adjustments\AdjusterScheme;
+use Vaened\PriceEngine\Adjustments\AdjustmentScheme;
+use Vaened\PriceEngine\Modifier;
+use Vaened\PriceEngine\Modifiers;
 use Vaened\SwiftCart\Providers\SimpleCashierProvider;
 use Vaened\SwiftCart\SwiftCartConfig;
 use Vaened\SwiftCart\Tests\Utils\Carts;
@@ -19,20 +19,6 @@ use Vaened\SwiftCart\Tests\Utils\Products;
 
 abstract class TestCase extends PhpUnitTestCase
 {
-    protected static function collect(array $adjustments): Adjustments
-    {
-        return new Adjustments(
-            $adjustments,
-            SwiftCartConfig::defaultCurrency(),
-            SwiftCartConfig::defaultContext(),
-        );
-    }
-
-    protected static function createAdjustment(float $amount, AdjusterScheme $scheme): Adjustment
-    {
-        return new Adjustment(MoneyFactory::of($amount), $scheme->type(), $scheme->mode(), $scheme->value(), $scheme->code());
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -46,6 +32,20 @@ abstract class TestCase extends PhpUnitTestCase
         SwiftCartConfig::setDefaultCurrency(MoneyFactory::defaultCurrency());
         SwiftCartConfig::setDefaultContext(MoneyFactory::defaultContext());
         SwiftCartConfig::setCashierProvider(new SimpleCashierProvider());
+    }
+
+    protected static function collect(array $adjustments): Modifiers
+    {
+        return new Modifiers(
+            $adjustments,
+            SwiftCartConfig::defaultCurrency(),
+            SwiftCartConfig::defaultContext(),
+        );
+    }
+
+    protected static function createAdjustment(float $amount, AdjustmentScheme $scheme): Modifier
+    {
+        return new Modifier(MoneyFactory::of($amount), $scheme->type(), $scheme->mode(), $scheme->value(), $scheme->code());
     }
 }
 

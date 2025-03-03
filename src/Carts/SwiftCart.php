@@ -9,8 +9,8 @@ namespace Vaened\SwiftCart\Carts;
 
 use Brick\Money\Money;
 use Vaened\PriceEngine\AdjustmentManager;
-use Vaened\PriceEngine\Adjustments;
-use Vaened\PriceEngine\Adjustments\Adjusters;
+use Vaened\PriceEngine\Adjustments\Adjustments;
+use Vaened\PriceEngine\Modifiers;
 use Vaened\Support\Types\ArrayList;
 use Vaened\SwiftCart\Entities\Identifiable;
 use Vaened\SwiftCart\Items\{CartItem, CartItems};
@@ -28,12 +28,12 @@ abstract class SwiftCart
 
     abstract protected function globalDiscountsManager(): AdjustmentManager;
 
-    public function globalCharges(): Adjustments
+    public function globalCharges(): Modifiers
     {
         return $this->syncAdjustments($this->globalChargesManager());
     }
 
-    public function globalDiscounts(): Adjustments
+    public function globalDiscounts(): Modifiers
     {
         return $this->syncAdjustments($this->globalDiscountsManager());
     }
@@ -63,10 +63,10 @@ abstract class SwiftCart
         );
     }
 
-    protected function createManagerOf(Adjusters $adjusters): AdjustmentManager
+    protected function createManagerOf(Adjustments $adjustments): AdjustmentManager
     {
         return new AdjustmentManager(
-            $adjusters,
+            $adjustments,
             Money::zero(SwiftCartConfig::defaultCurrency(), SwiftCartConfig::defaultContext()),
             quantity: 1
         );
@@ -77,15 +77,15 @@ abstract class SwiftCart
         return $this->staging()->totalizer();
     }
 
-    private function syncAdjustments(AdjustmentManager $manager): Adjustments
+    private function syncAdjustments(AdjustmentManager $manager): Modifiers
     {
         if (
-            !$manager->adjusters()->isEmpty() &&
+            !$manager->modifiers()->isEmpty() &&
             !$this->staging()->isEmpty()
         ) {
             $manager->revalue($this->totalizer()->total());
         }
 
-        return $manager->adjustments();
+        return $manager->modifiers();
     }
 }

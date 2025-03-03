@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\SwiftCart\Carts;
 
-use Vaened\PriceEngine\Adjustments\Tax\Taxes;
+use Vaened\PriceEngine\Adjustments\Taxation\Taxes;
 use Vaened\SwiftCart\Entities\RegisteredCommercialTransaction;
 use Vaened\SwiftCart\Items\CommerceableCartItem;
 use Vaened\SwiftCart\Items\ImmutableCartItems;
